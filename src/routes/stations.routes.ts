@@ -62,4 +62,32 @@ router.post('/filter', async (req, res) => {
   }
 });
 
+router.post('/filterProvider', async (req, res) => {
+  try {
+    const db = req.app.get('database');
+    const destination = req.body.destination;
+
+    const documents = await db
+      .collection('supplier_station_correlation')
+      .find(
+        { code: { $regex: destination, $options: 'i' } },
+        { projection: { suppliers: { $slice: 1 }, _id: 0 } },
+      )
+      .toArray();
+
+    if (documents) {
+      const destinationTree = documents.destinationTree;
+      console.log(destinationTree);
+    } else {
+      console.log('No se encontraron registros.');
+    }
+
+    console.log(documents);
+    res.send(documents);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+});
+
 export default router;

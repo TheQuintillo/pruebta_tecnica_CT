@@ -3,6 +3,7 @@ import { Parameters, CTSearch } from './types';
 import timetableRouter from './routes/timetables.routes';
 import stationsRouter from './routes/stations.routes';
 import accommodationsRouter from './routes/accommodations.routes';
+import pricesRouter from './routes/prices.routes';
 import connectToDB from './db';
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/timetables', timetableRouter);
 app.use('/stations', stationsRouter);
 app.use('/accommodations', accommodationsRouter);
+app.use('/prices', pricesRouter);
 
 app.post('/', (req, res) => {
   const body: Parameters = req.body;
@@ -25,11 +27,8 @@ app.post('/', (req, res) => {
 
 connectToDB()
   .then(database => {
-    // Puedes hacer referencia a la base de datos en este punto
-    // Por ejemplo, puedes establecerlo como una propiedad de la aplicación Express
     app.set('database', database);
 
-    // Inicia el servidor Express
     const port = 3000;
     app.listen(port, () => {
       console.log(`Example app listening on port ${port}`);
