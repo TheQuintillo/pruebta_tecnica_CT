@@ -70,8 +70,8 @@ router.post('/filterProvider', async (req, res) => {
     const documents = await db
       .collection('supplier_station_correlation')
       .find(
-        { code: { $regex: destination, $options: 'i' } },
-        { projection: { suppliers: { $slice: 1 }, _id: 0 } },
+        { suppliers: { $regex: destination, $options: 'i' } },
+        { projection: { code: 1, _id: 0 } },
       )
       .toArray();
 
