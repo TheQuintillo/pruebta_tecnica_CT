@@ -49,6 +49,12 @@
         "bonus": "retired"
       }
       ```
+      - En la ruta `/stations` he hecho:
+         - Sacar todas las estaciones de tren por cada destino trainEngine.journey_destination_tree
+         - En `/station/filter`: ejecutar una consulta a mongo que busque por ciudades o estaciones, para sacar los destinationCode y arrivalCode de cada estación. EJ: si busco ATCH (atocha) como ida, me devolverá ATCH, pero si busco MAD (Madrid) me tiene que devolver ATCH y CHAM, las 2 estaciones de tren en Madrid.
+         - En `/station/filterProvider`: filtrar el proveedor SERVIVUELO. Ten en cuenta que los proveedores se escriben así PROVEEDOR#CodigoDelProveedor ej: SERVIVUELO#MAD1
+       
+
       - No consigo entender como poder sacar estos puntos, con estas rutas disponibles:
          - Pedir al proveedor los trenes disponibles (horarios), las acomodaciones disponibles (turista, primera clase, ...) y los precios de cada una (ver documentación servivuelo.pdf). Hay que tener en cuenta los bonus, porque cambia el precio.
          - Sacar todas las combinaciones posibles de entre los resultados, por ejemplo, en un viaje Madrid - Barcelona, tenemos varias estaciones como Atocha y Chamartin, habrá varios horarios, y varios tipos de acomodación, una combinación sería: Madrid/Atocha/11:00/Turista - Barcelona/Sans/14:00/Premium
