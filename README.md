@@ -60,4 +60,4 @@
          - Sacar todas las combinaciones posibles de entre los resultados, por ejemplo, en un viaje Madrid - Barcelona, tenemos varias estaciones como Atocha y Chamartin, habrá varios horarios, y varios tipos de acomodación, una combinación sería: Madrid/Atocha/11:00/Turista - Barcelona/Sans/14:00/Premium
          - Guardar en la base de datos los resultados según nuestra estructura interna, la cual esta tipada como CTSearch en el directorio de types, ahí mismo encontraras cada parámetro explicado.
 
-         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como pedir las diferentes combinaciones (guardar registros en mongoDB si se hacerlo y con el formato del tipo CTSearch). Pero no consigo obtener esos resultados para pasarlos a guardar en la DB, sinceramente no lo entiendo y lo siento.
+         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como pedir las diferentes combinaciones (guardar registros en mongoDB si se hacerlo). Pero no consigo obtener esos resultados para pasarlos a guardar en la DB, sinceramente no lo entiendo y lo siento.
