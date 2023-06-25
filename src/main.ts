@@ -28,11 +28,6 @@ app.post('/', (req, res) => {
 connectToDB()
   .then(database => {
     app.set('database', database);
-<<<<<<< HEAD
-
-=======
->>>>>>> a09aa964bc9d38b975934486d0141c7db902f7ec
-    const port = 3000;
     app.listen(port, () => {
       console.log(`Example app listening on port ${port}`);
     });
