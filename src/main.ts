@@ -25,11 +25,7 @@ app.post('/', (req, res) => {
 
 connectToDB()
   .then(database => {
-    // Puedes hacer referencia a la base de datos en este punto
-    // Por ejemplo, puedes establecerlo como una propiedad de la aplicación Express
     app.set('database', database);
-
-    // Inicia el servidor Express
     const port = 3000;
     app.listen(port, () => {
       console.log(`Example app listening on port ${port}`);
