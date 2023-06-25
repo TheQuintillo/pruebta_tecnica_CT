@@ -1,0 +1,11 @@
+{
+  "name": "myEndpoint",
+  "method": "GET",
+  "route": "/point",
+  "response": {
+    "status": 200,
+    "body": {
+      "message": "Hello, world!"
+    }
+  }
+}
