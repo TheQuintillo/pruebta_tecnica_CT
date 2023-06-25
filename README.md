@@ -1,3 +1,4 @@
+
 # Prueba Técnica CT-BACKEND-TEST
 
    - Debido a que nunca he trabajado ni conocía lo que es un `mock-server`, he hecho esta prueba técnica lo mejor que he podido. Sabiendo, que en las indicaciones no debia modificar nada de mocker, he tenido que hacer algun cambio que otro porque presentaba errores que no sabía resolver y obtenía unos códigos de respuestas que no eran los esperados. A continuación indico que tipo de cambios he hecho (De todos modos no he borrado código, solo lo he comentado):
@@ -21,9 +22,11 @@
         return !valid;
         }
       ```
-      Al hacer este cambio la pettición de `search1.http` me devuelve el json como respuesta que ofrece el middleware del `mocker-server` y la petición es exitosa. Nose si debería haber tocado nada para poder hacerlo, pero es la única forma que he visto con la que podía hacerlo funcionar.
+      Al hacer este cambio la petición de `search1.http` me devuelve el json como respuesta que ofrece el middleware del `mocker-server` y la petición es exitosa. Nose si debería haber tocado nada para poder hacerlo, pero es la única forma que he visto con la que podía hacerlo funcionar.
 
       - Luego en la ruta `/prices` tenía problemas al incorporar la query `bonus` ya que si era `?pax=adult&bonus=retired` debería de devolverme el precio con un descuento de `-15` cosa que siempre me devolvía un codigo de `error 500`. Si no añadía a la query el parámetro `bonus` la solicitud se procesaba sin problemas. Pero he hecho un cambio en el middleware del `mocker-server`:
+
+
       Donde era:
       ```
       const bonus = req.query?.bonus && JSON.parse(req.query.bonus);
@@ -36,3 +39,25 @@
       ```
       Y ya me ha funcionado la query con `adult` y `bonus` por ejemplo `retired`. Sé que no debería haber modificado nada, pero no sabía hacerlo funcionar con un código de respuesta 200 y que me devolviese la respuesta esperada de otra forma.
 
+      He añadido todo al `req.body` tanto el body como el query haciendo la peticion con el req.body, por ejemplo:
+      ```
+      {
+        "shipID": "12",
+        "departureDate": "09:30:00",
+        "accommodation": "Confort",
+        "pax": "adult",
+        "bonus": "retired"
+      }
+      ```
+      - En la ruta `/stations` he hecho:
+         - Sacar todas las estaciones de tren por cada destino trainEngine.journey_destination_tree
+         - En `/station/filter`: ejecutar una consulta a mongo que busque por ciudades o estaciones, para sacar los destinationCode y arrivalCode de cada estación. EJ: si busco ATCH (atocha) como ida, me devolverá ATCH, pero si busco MAD (Madrid) me tiene que devolver ATCH y CHAM, las 2 estaciones de tren en Madrid.
+         - En `/station/filterProvider`: filtrar el proveedor SERVIVUELO. Ten en cuenta que los proveedores se escriben así PROVEEDOR#CodigoDelProveedor ej: SERVIVUELO#MAD1
+       
+
+      - No consigo entender como poder sacar estos puntos, con estas rutas disponibles:
+         - Pedir al proveedor los trenes disponibles (horarios), las acomodaciones disponibles (turista, primera clase, ...) y los precios de cada una (ver documentación servivuelo.pdf). Hay que tener en cuenta los bonus, porque cambia el precio.
+         - Sacar todas las combinaciones posibles de entre los resultados, por ejemplo, en un viaje Madrid - Barcelona, tenemos varias estaciones como Atocha y Chamartin, habrá varios horarios, y varios tipos de acomodación, una combinación sería: Madrid/Atocha/11:00/Turista - Barcelona/Sans/14:00/Premium
+         - Guardar en la base de datos los resultados según nuestra estructura interna, la cual esta tipada como CTSearch en el directorio de types, ahí mismo encontraras cada parámetro explicado.
+
+         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como pedir las diferentes combinaciones (guardar registros en mongoDB si se hacerlo y con el formato del tipo CTSearch). Pero no consigo obtener esos resultados para pasarlos a guardar en la DB, sinceramente no lo entiendo y lo siento.
