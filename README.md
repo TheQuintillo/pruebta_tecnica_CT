@@ -44,7 +44,7 @@
       {
         "shipID": "12",
         "departureDate": "09:30:00",
-        "accommodation": "Confocvbnrt",
+        "accommodation": "Confort",
         "pax": "adult",
         "bonus": "retired"
       }
