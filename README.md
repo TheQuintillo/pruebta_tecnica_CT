@@ -22,7 +22,7 @@
         return !valid;
         }
       ```
-      Al hacer este cambio la pettición de `search1.http` me devuelve el json como respuesta que ofrece el middleware del `mocker-server` y la petición es exitosa. Nose si debería haber tocado nada para poder hacerlo, pero es la única forma que he visto con la que podía hacerlo funcionar.
+      Al hacer este cambio la petición de `search1.http` me devuelve el json como respuesta que ofrece el middleware del `mocker-server` y la petición es exitosa. Nose si debería haber tocado nada para poder hacerlo, pero es la única forma que he visto con la que podía hacerlo funcionar.
 
       - Luego en la ruta `/prices` tenía problemas al incorporar la query `bonus` ya que si era `?pax=adult&bonus=retired` debería de devolverme el precio con un descuento de `-15` cosa que siempre me devolvía un codigo de `error 500`. Si no añadía a la query el parámetro `bonus` la solicitud se procesaba sin problemas. Pero he hecho un cambio en el middleware del `mocker-server`:
 
