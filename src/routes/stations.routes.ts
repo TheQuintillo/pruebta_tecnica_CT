@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const key = 'stations';
-    const client = req.app.get('redis'); // Clave para buscar en Redis
+    const client = req.app.get('redis');
     const cachedData = await client.get(key);
 
     if (cachedData) {
@@ -36,7 +36,6 @@ router.get('/', async (req, res) => {
         ])
         .toArray();
 
-      // Guardar los datos en Redis
       client.set(key, JSON.stringify(trainStations));
       console.log('Guarde los datos en Redis');
       res.send(trainStations);
@@ -48,20 +47,29 @@ router.get('/', async (req, res) => {
 
 router.post('/filter', async (req, res) => {
   try {
-    const db = req.app.get('database');
-    const destination = req.body.destination;
+    const key = `filter:${req.body.destination}`;
+    const client = req.app.get('redis');
+    const cachedData = await client.get(key);
 
-    const documents = await db
-      .collection('journey_destination_tree')
-      .find({
-        $or: [
-          { destinationCode: { $regex: destination, $options: 'i' } },
-          { destinationTree: { $regex: destination, $options: 'i' } },
-        ],
-      })
-      .toArray();
+    if (cachedData) {
+      res.send(JSON.parse(cachedData));
+      console.log('Uso Redis para la búsqueda');
+    } else {
+      const db = req.app.get('database');
+      const destination = req.body.destination;
 
-    res.send(documents);
+      const documents = await db
+        .collection('journey_destination_tree')
+        .find({
+          $or: [
+            { destinationCode: { $regex: destination, $options: 'i' } },
+            { destinationTree: { $regex: destination, $options: 'i' } },
+          ],
+        })
+        .toArray();
+      client.set(key, JSON.stringify(documents));
+      res.send(documents);
+    }
   } catch (e) {
     console.log(e);
     res.send(e);
@@ -70,19 +78,29 @@ router.post('/filter', async (req, res) => {
 
 router.post('/filterProvider', async (req, res) => {
   try {
-    const db = req.app.get('database');
-    const destination = req.body.destination;
+    const key = `filterProvider:${req.body.provider}`;
+    const client = req.app.get('redis');
+    const cachedData = await client.get(key);
 
-    const documents = await db
-      .collection('supplier_station_correlation')
-      .find(
-        { suppliers: { $regex: destination, $options: 'i' } },
-        { projection: { code: 1, _id: 0 } },
-      )
-      .toArray();
+    if (cachedData) {
+      res.send(JSON.parse(cachedData));
+      console.log('Uso Redis para la búsqueda');
+    } else {
+      const db = req.app.get('database');
+      const provider = req.body.provider;
 
-    console.log(documents);
-    res.send(documents);
+      const documents = await db
+        .collection('supplier_station_correlation')
+        .find(
+          { suppliers: { $regex: provider, $options: 'i' } },
+          { projection: { code: 1, _id: 0 } },
+        )
+        .toArray();
+
+      console.log(documents);
+      client.set(key, JSON.stringify(documents));
+      res.send(documents);
+    }
   } catch (e) {
     console.log(e);
     res.send(e);
