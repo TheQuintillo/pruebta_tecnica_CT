@@ -5,7 +5,7 @@
       - Primero levanté `mocker-server` (Servivuelo) con docker compose, donde la conexión al contentedor es `localhost:80/servivuelo/NombreDeLaRuta`
       - Después empecé a crear las rutas del servidor local `localhost:3000` como `/timetables`, `/accommodations`, `/prices` y `/stations`
       - He creado las rutas del servidor con la lógica de respuesta `localhost:3000` haciendo peticiones con `axios` hacia el `mocker-server: http://localhost:80/servivuelo/NombreDeLaRuta`, cosa que nose si es como debería haberlo hecho.
-      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` que creo que es el que debía utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
+      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` y `search2.http` que creo que eran los que debía de utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
       ```
       function checkError(port) {
         const valid =
@@ -60,4 +60,4 @@
          - Sacar todas las combinaciones posibles de entre los resultados, por ejemplo, en un viaje Madrid - Barcelona, tenemos varias estaciones como Atocha y Chamartin, habrá varios horarios, y varios tipos de acomodación, una combinación sería: Madrid/Atocha/11:00/Turista - Barcelona/Sans/14:00/Premium
          - Guardar en la base de datos los resultados según nuestra estructura interna, la cual esta tipada como CTSearch en el directorio de types, ahí mismo encontraras cada parámetro explicado.
 
-         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como pedir las diferentes combinaciones (guardar registros en mongoDB si se hacerlo). Pero no consigo obtener esos resultados para pasarlos a guardar en la DB, sinceramente no lo entiendo y lo siento.
+         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como obtener las diferentes combinaciones para que me devuelva un dato en el tipo `CTSearch`. No consigo obtener esos resultados para guardarlos en la DB, sinceramente no lo entiendo y lo siento.
