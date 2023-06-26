@@ -39,7 +39,7 @@
       ```
       Y ya me ha funcionado la query con `adult` y `bonus` por ejemplo `retired`. Sé que no debería haber modificado nada, pero no sabía hacerlo funcionar con un código de respuesta 200 y que me devolviese la respuesta esperada de otra forma.
 
-      He añadido todo al `req.body` tanto el body como el query haciendo la peticion con el req.body, por ejemplo:
+      He añadido todo al `req.body` tanto el body como el query, para que desde el body pase los datos al `req.query`, por ejemplo:
       ```
       {
         "shipID": "12",
