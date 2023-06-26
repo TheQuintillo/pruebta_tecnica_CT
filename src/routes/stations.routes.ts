@@ -47,14 +47,6 @@ router.post('/filter', async (req, res) => {
       })
       .toArray();
 
-    if (documents) {
-      const destinationTree = documents.destinationTree;
-      console.log(destinationTree);
-    } else {
-      console.log('No se encontraron registros.');
-    }
-
-    console.log(documents);
     res.send(documents);
   } catch (e) {
     console.log(e);
@@ -65,22 +57,12 @@ router.post('/filter', async (req, res) => {
 router.post('/filterProvider', async (req, res) => {
   try {
     const db = req.app.get('database');
-    const destination = req.body.destination;
+    const provider = req.body.provider;
 
     const documents = await db
       .collection('supplier_station_correlation')
-      .find(
-        { suppliers: { $regex: destination, $options: 'i' } },
-        { projection: { code: 1, _id: 0 } },
-      )
+      .find({ suppliers: { $regex: provider, $options: 'i' } }, { projection: { code: 1, _id: 0 } })
       .toArray();
-
-    if (documents) {
-      const destinationTree = documents.destinationTree;
-      console.log(destinationTree);
-    } else {
-      console.log('No se encontraron registros.');
-    }
 
     console.log(documents);
     res.send(documents);
