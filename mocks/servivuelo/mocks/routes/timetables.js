@@ -20,7 +20,8 @@ function checkError(port) {
     port === 'CHAM' ||
     port === 'SANTS' ||
     port === 'JSOR' ||
-    port === 'IBZP';
+    port === 'IBZP' ||
+    port === 'IBZ';
 
   return !valid;
 }

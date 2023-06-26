@@ -1,8 +1,7 @@
-import { CTSearch } from 'src/types';
 export type Prices = {
   shipID: number;
   departureDate: Date;
-  accommodation: CTSearch;
+  accommodation: Accommodation;
   pax: Pax;
   bonus: Bonus;
 };
@@ -17,4 +16,10 @@ enum Bonus {
   retired,
   resident,
   largefamily,
+}
+
+enum Accommodation {
+  Estandar,
+  Confort,
+  Premium,
 }
