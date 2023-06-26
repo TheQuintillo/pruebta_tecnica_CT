@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { createClient } from 'redis';
 
 const router = Router();
 
