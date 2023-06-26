@@ -8,7 +8,7 @@ router.post('/', async (req: Request<Parameters>, res: Response) => {
   try {
     const { journeys, passenger }: Parameters = req.body;
 
-    console.log(journeys);
+    console.log(...journeys);
 
     const queryParams = new URLSearchParams({
       adults: passenger.adults.toString(),

@@ -5,6 +5,7 @@ import stationsRouter from './routes/stations.routes';
 import accommodationsRouter from './routes/accommodations.routes';
 import pricesRouter from './routes/prices.routes';
 import connectToDB from './db';
+import client from './redisDB';
 
 const app = express();
 const port = 3000;
@@ -28,8 +29,9 @@ app.post('/', (req, res) => {
 connectToDB()
   .then(database => {
     app.set('database', database);
+    app.set('redis', client);
     app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
+      console.log(`Server on port: ${port}`);
     });
   })
   .catch(error => {
