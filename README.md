@@ -5,7 +5,7 @@
       - Primero levanté `mocker-server` (Servivuelo) con docker compose, donde la conexión al contentedor es `localhost:80/servivuelo/NombreDeLaRuta`
       - Después empecé a crear las rutas del servidor local `localhost:3000` como `/timetables`, `/accommodations`, `/prices` y `/stations`
       - He creado las rutas del servidor con la lógica de respuesta `localhost:3000` haciendo peticiones con `axios` hacia el `mocker-server: http://localhost:80/servivuelo/NombreDeLaRuta`, cosa que nose si es como debería haberlo hecho.
-      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` que creo que es el que debía utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
+      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` y `search2.http` que creo que eran los que debía de utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
       ```
       function checkError(port) {
         const valid =
@@ -39,7 +39,7 @@
       ```
       Y ya me ha funcionado la query con `adult` y `bonus` por ejemplo `retired`. Sé que no debería haber modificado nada, pero no sabía hacerlo funcionar con un código de respuesta 200 y que me devolviese la respuesta esperada de otra forma.
 
-      He añadido todo al `req.body` tanto el body como el query haciendo la peticion con el req.body, por ejemplo:
+      He añadido todo al `req.body` tanto el body como el query, para que desde el body pase los datos al `req.query`, por ejemplo:
       ```
       {
         "shipID": "12",
@@ -51,8 +51,8 @@
       ```
       - En la ruta `/stations` he hecho:
          - Sacar todas las estaciones de tren por cada destino trainEngine.journey_destination_tree
-         - En `/station/filter`: ejecutar una consulta a mongo que busque por ciudades o estaciones, para sacar los destinationCode y arrivalCode de cada estación. EJ: si busco ATCH (atocha) como ida, me devolverá ATCH, pero si busco MAD (Madrid) me tiene que devolver ATCH y CHAM, las 2 estaciones de tren en Madrid.
-         - En `/station/filterProvider`: filtrar el proveedor SERVIVUELO. Ten en cuenta que los proveedores se escriben así PROVEEDOR#CodigoDelProveedor ej: SERVIVUELO#MAD1
+         - En `/stations/filter`: ejecutar una consulta a mongo que busque por ciudades o estaciones, para sacar los destinationCode y arrivalCode de cada estación. EJ: si busco ATCH (atocha) como ida, me devolverá ATCH, pero si busco MAD (Madrid) me tiene que devolver ATCH y CHAM, las 2 estaciones de tren en Madrid.
+         - En `/stations/filterProvider`: filtrar el proveedor SERVIVUELO. Ten en cuenta que los proveedores se escriben así PROVEEDOR#CodigoDelProveedor ej: SERVIVUELO#MAD1
        
 
       - No consigo entender como poder sacar estos puntos, con estas rutas disponibles:
@@ -60,4 +60,4 @@
          - Sacar todas las combinaciones posibles de entre los resultados, por ejemplo, en un viaje Madrid - Barcelona, tenemos varias estaciones como Atocha y Chamartin, habrá varios horarios, y varios tipos de acomodación, una combinación sería: Madrid/Atocha/11:00/Turista - Barcelona/Sans/14:00/Premium
          - Guardar en la base de datos los resultados según nuestra estructura interna, la cual esta tipada como CTSearch en el directorio de types, ahí mismo encontraras cada parámetro explicado.
 
-         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni se hacer como pedir las diferentes combinaciones (guardar registros en mongoDB si se hacerlo y con el formato del tipo CTSearch). Pero no consigo obtener esos resultados para pasarlos a guardar en la DB, sinceramente no lo entiendo y lo siento.
+         Tengo todas las rutas hechas para que devuelva la respuesta con su json, pero aun no entiendo, ni he podido hacer, el obtener las diferentes combinaciones para que me devuelva un `json` para poder procesar los datos en un tipo `CTSearch`. No consigo obtener esos resultados para guardarlos en la DB, sinceramente no lo entiendo y lo siento.
