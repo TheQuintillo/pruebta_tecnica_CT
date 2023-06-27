@@ -5,7 +5,7 @@
       - Primero levanté `mocker-server` (Servivuelo) con docker compose, donde la conexión al contentedor es `localhost:80/servivuelo/NombreDeLaRuta`
       - Después empecé a crear las rutas del servidor local `localhost:3000` como `/timetables`, `/accommodations`, `/prices` y `/stations`
       - He creado las rutas del servidor con la lógica de respuesta `localhost:3000` haciendo peticiones con `axios` hacia el `mocker-server: http://localhost:80/servivuelo/NombreDeLaRuta`, cosa que nose si es como debería haberlo hecho.
-      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` y `search2.http` que creo que eran los que debía de utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
+      - Al hacer la petición a `timetables` vi que la función del `checkError` solo permitía los siguientes valores: `port === 'MAD1' || port === 'MAD2' || port === 'BCN1' || port === 'VAL1' || port === 'IBZ1'` y el body de `search1.http` y `search2.http` (modifiqué children a childrens con 's' en las peticiones search*.http)  que creo que eran los que debía de utilizar para esta petición contenía valores como por ejemplo `"from": "ATCH","to": "BCN","date": "2022-12-24"` donde ninguno contenía `MAD1` o `BCN1` y me arrojaba el error `GenericError` entonces modifiqué el `checkError` de la siguiente manera:
       ```
       function checkError(port) {
         const valid =
