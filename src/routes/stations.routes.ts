@@ -90,12 +90,7 @@ router.post('/filterProvider', async (req, res) => {
 
       const documents = await db
         .collection('supplier_station_correlation')
-<<<<<<< HEAD
         .find({ suppliers: { $regex: provider, $options: 'i' } })
-=======
-        .find(
-          { suppliers: { $regex: provider, $options: 'i' } })
->>>>>>> 4d85d614f6eb3c4222c0880fb35aac850f9f5dec
         .toArray();
 
       console.log(documents);

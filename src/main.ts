@@ -25,14 +25,13 @@ app.post('/', (req, res) => {
 
   res.send('Hello World!');
 });
-
+app.set('redis', client);
+app.listen(port, () => {
+  console.log(`Server on port: ${port}`);
+});
 connectToDB()
   .then(database => {
     app.set('database', database);
-    app.set('redis', client);
-    app.listen(port, () => {
-      console.log(`Server on port: ${port}`);
-    });
   })
   .catch(error => {
     console.error('Error al iniciar la aplicación:', error);
